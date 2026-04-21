@@ -36,6 +36,9 @@ export const ContactDetailPage = () => {
     <Card variant="outlined">
       <CardContent>
         <Stack spacing={2.5}>
+          <Button component={RouterLink} to="/" variant="text" sx={{ alignSelf: 'flex-end' }}>
+            Back
+          </Button>
           <Stack direction="row" spacing={2} alignItems="center">
             <Avatar sx={{ bgcolor: 'primary.main', width: 56, height: 56 }}>
               {getInitials(contact.firstName, contact.lastName)}

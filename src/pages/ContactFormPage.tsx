@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import { Card, CardContent, Typography } from '@mui/material'
+import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom'
+import { Button, Card, CardContent, Stack, Typography } from '@mui/material'
 import { ContactForm } from '../components/ContactForm'
 import { useContactsStore } from '../store/contactsStore'
 import type { ContactFormValues } from '../types/contact'
@@ -39,24 +39,31 @@ export const ContactFormPage = () => {
       }
     : undefined
 
+  const backTo = editingContact ? `/contacts/${editingContact.id}` : '/'
+
   return (
     <Card variant="outlined">
       <CardContent>
-        <ContactForm
-          mode={editingContact ? 'edit' : 'create'}
-          contacts={contacts}
-          initialValues={initialValues}
-          contactId={editingContact?.id}
-          onSubmit={(values) => {
-            if (editingContact) {
-              updateContact(editingContact.id, values)
-              navigate(`/contacts/${editingContact.id}`)
-              return
-            }
-            addContact(values)
-            navigate('/')
-          }}
-        />
+        <Stack spacing={2}>
+          <Button component={RouterLink} to={backTo} variant="text" sx={{ alignSelf: 'flex-end' }}>
+            Back
+          </Button>
+          <ContactForm
+            mode={editingContact ? 'edit' : 'create'}
+            contacts={contacts}
+            initialValues={initialValues}
+            contactId={editingContact?.id}
+            onSubmit={(values) => {
+              if (editingContact) {
+                updateContact(editingContact.id, values)
+                navigate(`/contacts/${editingContact.id}`)
+                return
+              }
+              addContact(values)
+              navigate('/')
+            }}
+          />
+        </Stack>
       </CardContent>
     </Card>
   )
